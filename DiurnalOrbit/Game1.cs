@@ -43,7 +43,9 @@ namespace DiurnalOrbit
 
             shipTexture = this.Content.Load<Texture2D>("Ship");
 
-            ship = new Ship(shipTexture, .25f, 150, 0, 2.5f, 5f);
+            ship = new Ship(shipTexture, 0.25f, 
+                new Vector2(_graphics.PreferredBackBufferWidth/2, _graphics.PreferredBackBufferHeight/2), 
+                150, 0, 5f, 5f);
         }
 
         protected override void Update(GameTime gameTime)
@@ -65,7 +67,7 @@ namespace DiurnalOrbit
 
             _spriteBatch.Begin();
 
-            ship.Draw(_spriteBatch, _graphics);
+            ship.Draw(_spriteBatch);
 
             _spriteBatch.DrawString(verdana, $"{ship.Radius}", new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2), Color.White);
 

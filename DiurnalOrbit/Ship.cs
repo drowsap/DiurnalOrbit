@@ -14,12 +14,15 @@ namespace DiurnalOrbit
     {
         // fields
 
+        private float priorRadius;
         private float radius;
+        private float minRadius;
+        private float maxRadius;
+
         private float orbit;
         private float radianOrbit;
 
-        private float minRadius;
-        private float maxRadius;
+        private Vector2 center;
 
         private float orbitSpeed;
         private float radiusSpeed;
@@ -32,17 +35,19 @@ namespace DiurnalOrbit
 
         // Constructor
 
-        public Ship(Texture2D texture, float size, float radius, float orbit) :
-            this(texture, size, radius, 50, 500, orbit)
+        public Ship(Texture2D texture, float size, Vector2 center, float radius, float orbit) :
+            this(texture, size, center, radius, 50, 500, orbit)
         { }
 
-        public Ship(Texture2D texture, float size, float radius, float orbit, float orbitSpeed, float radiusSpeed) :
-           this(texture, size, radius, 50, 500, orbit, orbitSpeed, radiusSpeed)
+        public Ship(Texture2D texture, float size, Vector2 center, float radius, float orbit, float orbitSpeed, float radiusSpeed) :
+           this(texture, size, center, radius, 50, 500, orbit, orbitSpeed, radiusSpeed)
         { }
 
-        public Ship(Texture2D texture, float size, float radius, float minRadius, float maxRadius, float orbit, float orbitSpeed, float radiusSpeed) :
+        public Ship(Texture2D texture, float size, Vector2 center, float radius, float minRadius, float maxRadius, float orbit, float orbitSpeed, float radiusSpeed) :
             base(texture, new Vector2(), size)
         {
+            this.center = center;
+
             this.minRadius = minRadius;
             this.maxRadius = maxRadius;
 
@@ -59,14 +64,16 @@ namespace DiurnalOrbit
                 this.radius = radius;
             }
 
+            priorRadius = radius;
+
             this.orbit = orbit;
 
             radianOrbit = ((orbit * (float)Math.PI) / 180f);
 
             rotation = -radianOrbit;
 
-            position.X = this.radius * (float)Math.Cos(radianOrbit);
-            position.Y = -this.radius * (float)Math.Sin(radianOrbit);
+            position.X = center.X + this.radius * (float)Math.Cos(radianOrbit);
+            position.Y = center.Y - this.radius * (float)Math.Sin(radianOrbit);
 
             this.orbitSpeed = orbitSpeed;
             this.radiusSpeed = radiusSpeed;
@@ -76,14 +83,22 @@ namespace DiurnalOrbit
 
         public override void Update()
         {
+            priorRadius = radius;
+
             UserInput();
 
+            // Rotational Momentum
+            orbitSpeed = (priorRadius / radius) * orbitSpeed;
+
+            // Determining radian angle 
             radianOrbit = ((orbit * (float)Math.PI) / 180f);
 
+            // Setting ship oriantation
             rotation = -radianOrbit;
 
-            position.X = this.radius * (float)Math.Cos(radianOrbit);
-            position.Y = -this.radius * (float)Math.Sin(radianOrbit);
+            // Changing position by current angle of circle
+            position.X = center.X + this.radius * (float)Math.Cos(radianOrbit);
+            position.Y = center.Y - this.radius * (float)Math.Sin(radianOrbit);
         }
 
         public void UserInput()
@@ -117,6 +132,7 @@ namespace DiurnalOrbit
             }
         }
 
+        /*
         public void Draw(SpriteBatch sb, GraphicsDeviceManager gm)
         {
             float x = gm.PreferredBackBufferWidth/2 + position.X;
@@ -125,6 +141,6 @@ namespace DiurnalOrbit
             sb.Draw(texture, new Vector2(x, y), null, Color.White, rotation, new Vector2(texture.Width / 2, texture.Height / 2), size, SpriteEffects.None, 1);
         }
 
-
+        */
     }
 }
