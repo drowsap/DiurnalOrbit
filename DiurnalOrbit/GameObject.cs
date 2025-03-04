@@ -20,6 +20,15 @@ namespace DiurnalOrbit
 
         protected float rotation;
 
+        // Properties
+
+        public float X { get => position.X; }
+
+        public float Y { get => position.Y; }
+
+        public float Width { get => texture.Width * size; }
+
+        public float Height { get => texture.Height * size; }
 
         // Constructors
 
