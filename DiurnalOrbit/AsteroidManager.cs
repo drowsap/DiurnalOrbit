@@ -23,7 +23,7 @@ namespace DiurnalOrbit
         {
             this.speed = speed;
 
-
+            this.minScale = minScale;
             this.maxScale = maxScale;
         }
     }
