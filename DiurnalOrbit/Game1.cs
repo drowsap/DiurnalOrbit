@@ -14,6 +14,9 @@ namespace DiurnalOrbit
         private Ship ship;
         private Texture2D shipTexture;
 
+        private AsteroidManager am;
+        private Texture2D asteroidTexture;
+
         private SpriteFont verdana;
 
         public Game1()
@@ -46,6 +49,10 @@ namespace DiurnalOrbit
             ship = new Ship(shipTexture, 0.25f, 
                 new Vector2(_graphics.PreferredBackBufferWidth/2, _graphics.PreferredBackBufferHeight/2), 
                 150, 0, 5f, 5f);
+
+            asteroidTexture = this.Content.Load<Texture2D>("Asteroid");
+
+            am = new AsteroidManager(asteroidTexture);
         }
 
         protected override void Update(GameTime gameTime)
@@ -55,6 +62,7 @@ namespace DiurnalOrbit
 
             // TODO: Add your update logic here
             ship.Update();
+            am.Update();
 
             base.Update(gameTime);
         }
@@ -68,6 +76,7 @@ namespace DiurnalOrbit
             _spriteBatch.Begin();
 
             ship.Draw(_spriteBatch);
+            am.Draw(_spriteBatch);
 
             _spriteBatch.DrawString(verdana, $"{ship.Radius}", new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2), Color.White);
 

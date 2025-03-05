@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -11,20 +12,48 @@ namespace DiurnalOrbit
     internal class AsteroidManager
     {
         private List<Asteroid> asteroids;
-        private Vector2 spawnBounds;
+        private Texture2D texture;
 
         private float speed;
-        private Vector2 velocity;
+        //private Vector2 velocity;
 
-        private float minScale;
-        private float maxScale;
+        //private float[] sizes;
 
-        public AsteroidManager(float speed, float minScale, float maxScale)
+        private Random rng;
+
+        public AsteroidManager(Texture2D texture)
         {
-            this.speed = speed;
+            this.texture = texture;
 
-            this.minScale = minScale;
-            this.maxScale = maxScale;
+            asteroids = new List<Asteroid>();
+            speed = 5;
+
+            rng = new Random();
+        }
+
+        // Methods
+
+        public void Update()
+        {
+            GenerateAsteroids();
+
+            foreach (Asteroid a in asteroids)
+            {
+                a.Update();
+            }
+        }
+
+        public void GenerateAsteroids()
+        {
+            asteroids.Add(new Asteroid(texture, new Vector2(0, rng.Next(1000)), 1, new Vector2(speed, 0)));
+        }
+
+        public void Draw(SpriteBatch sb)
+        {
+            foreach (Asteroid a in asteroids)
+            {
+                a.Draw(sb);
+            }
         }
     }
 }
