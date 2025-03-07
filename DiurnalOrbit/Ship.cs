@@ -36,11 +36,11 @@ namespace DiurnalOrbit
         // Constructor
 
         public Ship(Texture2D texture, float size, Vector2 center, float radius, float orbit) :
-            this(texture, size, center, radius, 50, 500, orbit)
+            this(texture, size, center, radius, 200, 500, orbit)
         { }
 
         public Ship(Texture2D texture, float size, Vector2 center, float radius, float orbit, float orbitSpeed, float radiusSpeed) :
-           this(texture, size, center, radius, 50, 500, orbit, orbitSpeed, radiusSpeed)
+           this(texture, size, center, radius, 200, 500, orbit, orbitSpeed, radiusSpeed)
         { }
 
         public Ship(Texture2D texture, float size, Vector2 center, float radius, float minRadius, float maxRadius, float orbit, float orbitSpeed, float radiusSpeed) :
@@ -81,7 +81,7 @@ namespace DiurnalOrbit
 
         // Methods
 
-        public override void Update()
+        public override void Update(GameTime gt)
         {
             priorRadius = radius;
 

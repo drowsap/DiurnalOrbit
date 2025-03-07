@@ -2,9 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace DiurnalOrbit
 {
@@ -13,20 +15,25 @@ namespace DiurnalOrbit
         // Fields
 
         private Vector2 velocity;
+        private bool rotates;
 
         // Constructor 
 
-        public Asteroid(Texture2D texture, Vector2 position, float size, Vector2 velocity)
+        public Asteroid(Texture2D texture, Vector2 position, float size, Vector2 velocity, bool rotates)
             : base(texture, position, size)
         {
             this.velocity = velocity;
+            this.rotates = rotates;
         }
 
         // Methods
 
-        public override void Update()
+        public override void Update(GameTime gt)
         {
             position += velocity;
+
+            if (rotates)
+                rotation += .05f;
         }
 
         public bool CheckCollision(GameObject target)

@@ -61,8 +61,8 @@ namespace DiurnalOrbit
                 Exit();
 
             // TODO: Add your update logic here
-            ship.Update();
-            am.Update();
+            ship.Update(gameTime);
+            am.Update(gameTime);
 
             base.Update(gameTime);
         }
